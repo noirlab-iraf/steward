@@ -1,0 +1,13 @@
+# Help directory for the SOMTLOCAL package.
+
+$doc		= "steward$somtlocal/doc/"
+$ccd4th		= "steward$somtlocal/ccd4th/"
+$retmmt		= "steward$somtlocal/retmmt/"
+$itar		= "steward$somtlocal/itar/"
+
+rccd4th		hlp=doc$rccd4th.hlp,		src=ccd4th$t_rccd4th.x
+rretmmt		hlp=doc$rretmmt.hlp,		src=retmmt$t_rretmmt.x
+itarr		hlp=doc$itarr.hlp,		src=itar$t_itar.x
+itart		hlp=doc$itart.hlp,		src=itar$t_itar.x
+itarw		hlp=doc$itarw.hlp,		src=itar$t_itar.x
+revisions	hlp=Revisions

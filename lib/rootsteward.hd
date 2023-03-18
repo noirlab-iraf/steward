@@ -1,0 +1,8 @@
+# Root task entry for the steward package help tree.  Defines `steward' as both
+# a task and a package in the steward help database.
+
+steward		men  = steward$steward.men,
+		hlp  = steward$steward.men,
+		sys  = steward$steward.hlp,
+		pkg  = steward$steward.hd,
+		src  = steward$steward.cl

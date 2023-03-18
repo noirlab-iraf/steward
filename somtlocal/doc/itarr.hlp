@@ -1,0 +1,73 @@
+.help itarr Jan93 steward.somtlocal
+.ih
+NAME
+itarr -- Read a tar tape file and extract its contents
+.ih
+USAGE
+itarr astro!mtf[1]
+.ih
+PARAMETERS
+.ls in = "mta[1]"
+The input tar file.
+.le
+.ls out = "|tar xBbf 20 - > /dev/tty"
+The command that will read the input tar file.
+The default value of this parameter will extract all files in the tar file.
+Note the vertical bar (pipe symbol)
+must be the first character of this parameter.
+All the usual tar command arguments may be used with caution.
+The blocking factor of the tar command should agree with the
+\fIblocking_factor\fR parameter of this task.
+.le
+.ls blocking_factor = 20
+The tar tape blocking factor.  Tar records will be read and written with a
+length equal to the blocking factor times 512 bytes.  This value should
+agree with the blocking factor of the tar command above.
+.le
+.ih
+DESCRIPTION
+The purpose of this task is to provide an IRAF front end to the Unix tar
+command so as to be able to easily manipulate multiple tar files on one
+tape and access remote tape drives, two areas where the native Unix
+facilities are quite lacking.
+The tar records are merely copied
+from the input tar file
+to a Unix pipe to the tar command which will read the byte stream.
+Using a Unix pipe avoids a possibly huge intermediate temporary file
+needed by an IRAF pipe.
+.ih
+EXAMPLES
+[1] Extract all the files in the second tar file on a remote tape drive.
+
+    cl> itarr astro!mtf[2]
+
+[2] Extract just the files in the "misc" directory (and recursively, its
+subdirectories, of course).
+
+    cl> itarr astro!mtf[2] out="|tar xBbf 20 - ./misc > /dev/tty"
+
+[3] Extract just the files listed in the file \fIfoo\fR.  The files
+must be listed one per line, and must match exactly the names listed
+by \fIitart\fR or \fItar t\fR ("./misc/junk1").  Watch out for leading or
+trailing whitespace.
+
+    cl> itarr astro!mtf[2] out="|tar xBbf 20 - -I foo > /dev/tty"
+
+[4] Use a different blocking factor.
+
+    cl> itarr astro!mtf[2] out="|tar xBbf 127 - > /dev/tty" b=127
+.ih
+TIME REQUIREMENTS
+.ih
+BUGS
+Inappropriate values of the parameter where the tar command appears
+may lead to unpredictable results.
+
+IRAF I/O redirection cannot be used on the tar command's stdin or stdout.
+
+This task could be used with other Unix commands besides tar;
+the possibilities are limited only by your imagination.
+.ih
+SEE ALSO
+itart, itarw, Unix manual page for "tar"
+.endhelp

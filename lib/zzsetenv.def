@@ -1,0 +1,10 @@
+# Global environment definitions for the STEWARD packages.
+
+set	pkglibs		= "steward$lib/"
+set	stewardbin	= "steward$bin(arch)/"
+set	stewardlib	= "steward$lib/"
+
+set	somtlocal	= steward$somtlocal/
+set	soproto		= steward$soproto/
+
+keep

@@ -1,0 +1,5 @@
+# Root help directory for the STEWARD packages.  This dummy package is necessary
+# in order to have `steward' appear as a module in some package, so that the
+# user can type "help steward" (with the `steward' given as a task).
+
+_steward		pkg = steward$lib/rootsteward.hd

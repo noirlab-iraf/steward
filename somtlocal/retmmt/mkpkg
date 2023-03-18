@@ -1,0 +1,12 @@
+# rretmmt library
+
+$checkout   libpkg.a   ../
+$update     libpkg.a
+$checkin    libpkg.a   ../
+$exit
+
+libpkg.a:
+	t_rretmmt.x   <error.h>                             retmmt.h
+	read_retmmt.x           <imhdr.h> <mach.h>          retmmt.h
+	ret_header.x            <imhdr.h> <imio.h> <time.h> retmmt.h
+	;

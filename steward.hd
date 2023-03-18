@@ -1,0 +1,18 @@
+# Help directory for the STEWARD packages.
+
+$somtlocal	= "./somtlocal/"
+$soproto	= "./soproto/"
+
+# Define help files for the packages.
+
+somtlocal	men = somtlocal$somtlocal.men,
+		hlp = ..,
+		sys = somtlocal$somtlocal.hlp,
+		pkg = somtlocal$somtlocal.hd,
+		src = somtlocal$somtlocal.cl
+
+soproto		men = soproto$soproto.men,
+		hlp = ..,
+		sys = soproto$soproto.hlp,
+		pkg = soproto$soproto.hd,
+		src = soproto$soproto.cl

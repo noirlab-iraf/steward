@@ -1,0 +1,12 @@
+# Parameter file for RRETMMT, the MMT Reticon format reader
+reticon_file,f,a,mta,,,Reticon data source
+iraf_file,f,a,,,,IRAF filename
+file_list,s,h,"1-99999",,,Reticon tape file list
+disk_numbers,s,h,"1-99999",,,Reticon disk numbers to read
+picture_numbers,s,h,"1-99999",,,picture (file) numbers to read
+make_image,b,h,yes,,,create IRAF image?
+overwrite,b,h,no,,,overwrite existing files?
+long_header,b,h,no,,,print full Reticon header?
+data_type,s,h,r,,,IRAF data type
+start_number,i,h,1,,,starting image number for IRAF name
+mode,s,h,ql,,,

@@ -1,0 +1,140 @@
+.help rretmmt Jul89 steward.somtlocal
+.ih
+NAME
+rretmmt -- convert MMT Reticon data tape format to IRAF images
+.ih
+USAGE
+rretmmt reticon_file iraf_file
+.ih
+PARAMETERS
+.ls reticon_file
+The MMT Reticon data source.  This is either a template describing
+a list of disk files or a tape file specification of the form
+mt*[n], where mt indicates a mag tape device, * represents a density,
+and [n] is the tape file number.  If the tape file number n is 
+specified then only that file is converted.  If the general tape
+device name is given, i.e. mta, mtb800, etc, then the files 
+specified by the file_list parameter will be read from the tape.
+.le
+.ls iraf_file
+The IRAF file root which will receive the data if the
+\fImake_image\fR parameter is set.  The output
+filename is concatenated from this parameter and the sum
+of the sequential picture
+number and the \fIstart_number\fR (see below).
+IRAF images with these names would be created from
+the first three pictures (files) if 
+\fIiraf_file\fR = "mmt" and start_number = 1:
+mmt0001, mmt0002, mmt0003.
+.le
+.ls file_list = "1-99999"
+If \fIreticon_file\fR is a general tape device, this parameter tells which
+tape files to read.  Each Reticon picture is in a separate
+tape file.  This file list string can consist of any sequence of file
+numbers separated by at least one of comma or dash.  A dash specifies
+a range of files.  For example the string
+.nf
+	"1,2,3-5,8-6"
+.fi
+will convert the files 1 through 8.
+.le
+.ls disk_numbers = "1-99999"
+A string listing the disk numbers to be read.
+Each disk number typically consists of many Reticon pictures (files).
+.le
+.ls picture_numbers = "1-99999"
+A string listing the Reticon picture (file) numbers to be read
+from each disk number.
+.le
+.ls make_image = yes
+This switch determines whether the Reticon pictures are converted to
+IRAF images.  When \fImake_image\fR = no, only a listing of the
+headers is produced; no output image is written.
+.le
+.ls overwrite = no
+If "no" (the default), do not overwrite any IRAF file.  If "yes",
+delete the old file and write out the new one.
+.le
+.ls long_header = no
+This parameter determines whether a long or short header is printed.
+The short header contains only the disk
+and file numbers, the file identification, and the
+integration time;
+the long header contains all information available including
+disk and files numbers,
+label, number of channels of data, integration time,
+local standard time of exposure, date of observation,
+sideral time, Greenwich Julian day number,
+site, beam position,
+and comments.
+.le
+.ls data_type = "r"
+The data type of the output IRAF image.  If an incorrect data_type
+or null string is entered, the default data type \fIreal\fR is used.
+.le
+.ls start_number = 1
+The integer value of this parameter is added to the sequential picture
+number when generating output filenames.  Filenames are of the form
+.nf
+	\fIiraf_file\fRseq_pic_no+\fIstart_number\fR
+
+.fi
+.le
+.ih
+DESCRIPTION
+The pictures (files) from an MMT Reticon data tape are read and
+optionally converted
+to a sequence of IRAF images.  The picture to be read can be specified.
+The MMT Reticon header information is printed in either a short or long form.
+.ih
+EXAMPLES
+[1] Convert all pictures on the MMT Reticon data tape to IRAF images, with the
+root image name being "sep87".	The FORTH tape is mounted on mtb.
+The output images will be of data type "unsigned short" (16-bit
+unsigned integers).
+
+	cl> rretmmt mtb sep87 data="u"
+
+[2] List the headers from the same Reticon tape read in example 1, but
+don't make output images.  A \fIlong_header\fR will be listed; sample
+output is shown.
+
+	cl> rretmmt mtb make_image=no long_header=yes
+
+.nf
+label = "16213 27 2005-01"
+disk = 16213,  file = 27,
+Ndim = 1,  Nch = 4096,
+ITM = 600 sec,  local standard time = 16:34:39.9 (MST)
+date = 1 Nov 1988,  ST = 18:57:01.0
+Greenwich JDN = 2447467.482406
+RA = 20:05:12.8, DEC = -1:10:08.0
+Site = MMT,  Beam = 0,
+comments:
+    OBJECT:
+    R.A. 20 05 12.8
+    Dec. - 01 10 08    Epoch 1950.0       (Should be 1950 !)
+    P.I.              Program              Observer 
+    Comments:
+    Obj. Pos.....              Slit Height.. IMAGE
+    L/R Counts...              Slit Width... STACKER
+    Dark Counts.. 14/13        Spec. Focus.. 795
+    Grat. Tilt... 5250 A       TIRP Height.. 5.3
+    Seeing.......              Gen II Gain.. 6.28
+    Clouds.......              Front Tube V. 30 KV
+    Top Filter... CLEAR        PED Level.... 1.50
+    Bot Filter... CLEAR        Cooler Temp.. -25 C
+    Grating #... 300 GPM       Spec. Temp... 10  C
+.fi
+
+[3] Convert pictures 5 - 10 with disk number 8623.  These are to be
+named sep.0100, ..., sep.0105.
+
+	cl> rretmmt mtb sep. pic=5-10 disk=8623 start=100
+.ih
+TIME REQUIREMENTS
+.ih
+BUGS
+.ih
+SEE ALSO
+.endhelp

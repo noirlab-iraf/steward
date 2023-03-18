@@ -1,0 +1,120 @@
+.help rccd4th May89 steward.somtlocal
+.ih
+NAME
+rccd4th -- convert Steward Observatory CCD FORTH format data to IRAF images
+.ih
+USAGE
+rccd4th forth_file iraf_file
+.ih
+PARAMETERS
+.ls forth_file
+The FORTH data source.
+.le
+.ls iraf_file
+The IRAF file root which will receive the data if the
+\fImake_image\fR parameter is set.  The output
+filename is concatenated from this parameter and the FORTH picture
+number.  IRAF images with these names would be created from FORTH
+pictures 1, 2, and 3 if \fIiraf_file\fR = "forth" (and offset = 0;
+see below):  forth.0001, forth.0002, forth.0003.
+.le
+.ls file_number = 1
+If \fIforth_file\fR is a tape device, this parameter tells which
+tape file will be read.  In almost all cases, the FORTH data will
+occupy the first and only file on the tape.
+.le
+.ls picture_numbers = "1-9999"
+A string listing the FORTH pictures to be read.
+.le
+.ls skip_npictures = 0
+The number of physical pictures on the tape to skip before reading.
+This is useful for reading pictures with duplicate picture numbers
+(see example 3).
+.le
+.ls make_image = yes
+This switch determines whether the FORTH pictures are converted to
+IRAF images.  When \fImake_image\fR = no, only a listing of the
+headers is produced; no output image is written.
+.le
+.ls overwrite = no
+If "no" (the default), do not overwrite any IRAF file.  If "yes",
+delete the old file and write out the new one.
+.le
+.ls long_header = no
+This parameter determines whether a long or short header is printed.
+The short header contains only the picture number, label, and 
+integration time;
+the long header contains all information available including
+picture number, label, number of columns and lines, integration time,
+start and stop times of exposure, date of observation, shutter position,
+amount of preflash exposure,
+CCD chip and dewar temperatures, filter, disperser, tilt, aperture,
+and comments.
+.le
+.ls data_type = "r"
+The data type of the output IRAF image.  If an incorrect data_type
+or null string is entered, the default data type \fIreal\fR is used.
+.le
+.ls offset = 0
+The integer value of this parameter is added to each FORTH picture
+number when generating output filenames.  Filenames are of the form
+.nf
+	\fIiraf_file\fR.picture_number+\fIoffset\fR
+
+.fi
+The offset parameter can be used to create a sequence of output
+IRAF filenames with continuous, sequential suffixes over more than
+one night's data.
+.le
+.ih
+DESCRIPTION
+The pictures from a FORTH data tape are read and optionally converted
+to a sequence of IRAF images.  The picture to be read can be specified.
+The FORTH header information is printed in either a short or long form.
+Some keywords will not be written to the IRAF header if they have not
+been initialized:  AIRMASS, DETECTOR, FILTERS, TILT, MODE, DISPERSE,
+APERTURE, and COMMENTs.
+.ih
+EXAMPLES
+[1] Convert all pictures on the FORTH tape to IRAF images, with the
+root image name being "sep87".	The FORTH tape is mounted on mtb.
+The output images will be of data type "unsigned short" (16-bit
+unsigned integers).
+
+	cl> rccd4th mtb sep87 data="u"
+
+[2] List the headers from the same FORTH tape read in example 1, but
+don't make output images.  A \fIlong_header\fR will be listed; sample
+output is shown.
+
+	cl> rccd4th mtb make_image=no long_header=yes
+
+.nf
+PICTURE = 71, label = "MX",
+Ndim = 2,   Ncols = 167,   Nlines = 800,
+ITM = 3600 sec, START = 22:03:31.5, STOP = 23:03:32.6 (MST)
+date = 19 Sep 1987, ST = 0:00:00.0, HA = 0:00:00.0
+RA = 20:05:12.8, DEC = -0:10:08.0
+shutter = OPEN, preflash = 0 cycles, phase = 0, airmass = 1.236
+Ctemp = -143, Dtemp = -188, tape # = 10055
+chip = "TI 800X800",   mode = "DIRECT",
+filter = "NONE",   disperser = "",
+tilt = "3.4 DEGREES",	aperture = "4 ARCSEC FIBER (3)",
+comments:
+   A2634SH.G1
+   60 MINUTE EXPOSURE
+.fi
+
+[3] A tape has picture numbers 5 - 10, followed by 8 - 20.
+Picture numbers 8 - 10 are duplicated on the tape.  Convert
+the second set of pictures numbers 8 and 9 to IRAF images, by
+skipping the first 5 pictures (5, 6, 7, 8, 9) on the tape.
+
+	cl> rccd4th mtb sep87 pic=8,9 skip=5
+.ih
+TIME REQUIREMENTS
+.ih
+BUGS
+.ih
+SEE ALSO
+.endhelp

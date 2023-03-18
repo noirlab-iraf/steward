@@ -1,0 +1,12 @@
+# Parameter file for RCCD4TH, the mountain CCD FORTH format reader
+forth_file,f,a,mta,,,FORTH data source
+iraf_file,f,a,,,,IRAF filename
+file_number,i,h,1,,,FORTH tape file to be read
+picture_numbers,s,h,"1-99999",,,picture numbers to read
+skip_npictures,i,h,0,,,number of pictures to skip before reading
+make_image,b,h,yes,,,create IRAF image?
+overwrite,b,h,no,,,overwrite existing files?
+long_header,b,h,no,,,print full FORTH header?
+data_type,s,h,r,,,IRAF data type
+offset,i,h,0,,,offset added to output filename
+mode,s,h,ql,,,

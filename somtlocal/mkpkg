@@ -1,0 +1,27 @@
+# Make the SOMTLOCAL package.
+
+$call	relink
+$exit
+
+update:
+	$call	relink
+	$call	install
+	;
+
+relink:
+	$set	LIBS = "-lxtools"
+	$update	libpkg.a
+	$omake	x_somtlocal.x
+	$link	x_somtlocal.o libpkg.a $(LIBS) -o xx_somtlocal.e
+	;
+
+install:
+	$move	xx_somtlocal.e stewardbin$x_somtlocal.e
+	;
+
+libpkg.a:
+	@ccd4th
+	@itar
+	@retmmt
+	@util
+	;

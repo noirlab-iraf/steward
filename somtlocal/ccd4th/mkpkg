@@ -1,0 +1,13 @@
+# rccd4th library
+
+$checkout   libpkg.a   ../
+$update     libpkg.a
+$checkin    libpkg.a   ../
+$exit
+
+libpkg.a:
+	t_rccd4th.x   <error.h> 	  <mach.h>	    ccd4th.h
+	ccd_data.x    <error.h> <imhdr.h> <mach.h>	    ccd4th.h
+	ccd_header.x		<imhdr.h> <imio.h> <time.h> ccd4th.h
+	ccd_picture.x <error.h> 			    ccd4th.h
+	;

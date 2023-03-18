@@ -1,0 +1,4 @@
+out,f,a,mta[1],,,output
+in,f,h,|tar cbf 20 - .,,,input
+blocking_factor,i,h,20,1,127,tar tape blocking factor
+mode,s,h,ql,,,

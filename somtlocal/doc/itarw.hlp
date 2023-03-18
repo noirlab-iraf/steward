@@ -1,0 +1,78 @@
+.help itarw Jan93 steward.somtlocal
+.ih
+NAME
+itarw -- Write a tar tape file
+.ih
+USAGE
+itarw astro!mtf[1]
+.ih
+PARAMETERS
+.ls out = "mta[1]"
+The output tar file.
+.le
+.ls in = "|tar cbf 20 - ."
+The command that will create the tar file to be output.
+The default value of this parameter will create a tar file containing all
+disk files in the current working directory (and recursively, its
+subdirectories, of course).
+Note the vertical bar (pipe symbol)
+must be the first character of this parameter.
+All the usual tar command arguments may be used with caution.
+The blocking factor of the tar command should agree with the
+\fIblocking_factor\fR parameter of this task.
+.le
+.ls blocking_factor = 20
+The tar tape blocking factor.  Tar records will be read and written with a
+length equal to the blocking factor times 512 bytes.  This value should
+agree with the blocking factor of the tar command above.
+.le
+.ih
+DESCRIPTION
+The purpose of this task is to provide an IRAF front end to the Unix tar
+command so as to be able to easily manipulate multiple tar files on one
+tape and access remote tape drives, two areas where the native Unix
+facilities are quite lacking.
+The tar records are merely copied
+from a Unix pipe from the tar command which will write a byte stream
+to the output tar file.
+Using a Unix pipe avoids a possibly huge intermediate temporary file
+needed by an IRAF pipe.
+.ih
+EXAMPLES
+[1] Dump all the files in the current working directory
+(and recursively, its subdirectories, of course)
+to a blank tape on a remote tape drive.
+
+    cl> itarw astro!mtf[1]
+
+[2] Dump all the files in the current working directory
+(and recursively, its subdirectories, of course)
+into a tar file, appending it to a tape that has previously written
+tar files on it and is mounted on a remote tape drive.
+
+    cl> itarw astro!mtf[EOT]
+
+[2] Dump all the files in the "misc" directory
+(and recursively, its subdirectories, of course)
+to a blank tape on a remote tape drive.
+
+    cl> itarw astro!mtf[1] in="|tar cbf 20 - misc"
+
+[3] Use a different blocking factor.
+
+    cl> itarw astro!mtf[1] in="|tar cbf 127 - ." b=127
+.ih
+TIME REQUIREMENTS
+.ih
+BUGS
+Inappropriate values of the parameter where the tar command appears
+may lead to unpredictable results.
+
+IRAF I/O redirection cannot be used on the tar command's stdin or stdout.
+
+This task could be used with other Unix commands besides tar;
+the possibilities are limited only by your imagination.
+.ih
+SEE ALSO
+itart, itarr, Unix manual page for "tar"
+.endhelp

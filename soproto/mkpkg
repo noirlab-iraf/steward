@@ -1,0 +1,23 @@
+# Make the SOPROTO package.
+
+$call	relink
+$exit
+
+update:
+	$call	relink
+	$call	install
+	;
+
+relink:
+	$set	LIBS = "-lxtools"
+#	$update	libpkg.a
+#	$omake	x_soproto.x
+#	$link	x_soproto.o libpkg.a $(LIBS) -o xx_soproto.e
+	;
+
+install:
+#	$move	xx_soproto.e stewardbin$x_soproto.e
+	;
+
+libpkg.a:
+	;

@@ -1,0 +1,4 @@
+10 July    1989 Release
+ 2 August  1989 Added rretmmt to read MMT Reticon tapes
+ 5 October 1992 Allow rretmmt to read older format tapes
+26 January 1993 Add itar[rtw] tasks
